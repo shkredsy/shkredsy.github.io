@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101c21" />
+  <meta name="description" content="ШКРЕДСЫ — мармелад в трёх вкусах. Дыня, голубая малина и ежевика в объёмной интерактивной истории." />
+  <title>ШКРЕДСЫ — лови свой вкус</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;background:#101c21;color:#f0f7f7;font-family:Arial,sans-serif}.initial{min-height:100svh;padding:32px 7vw;position:relative;overflow:hidden;background:radial-gradient(ellipse at 70% 50%,#51442b,transparent 65%)}.initial-name{font-size:24px;font-weight:900;letter-spacing:-1px}.initial h1{position:relative;margin:20vh 0 0;font-size:clamp(60px,10vw,150px);line-height:.87;letter-spacing:-.07em;z-index:1}.initial h1 span{color:#f6d251}.initial-art{position:absolute;right:12%;top:10%;height:85%;width:35%;transform:rotate(12deg)}.initial-art svg{width:100%;height:100%}.initial a{display:inline-block;color:#101c21;background:#f6d251;padding:18px 26px;margin-top:30px;border-radius:6px;text-decoration:none}.initial p{max-width:30ch;font-size:17px;line-height:1.5}.initial small{position:absolute;bottom:22px;left:7vw;font-size:14px}@media(max-width:600px){.initial-art{right:-16%;width:76%;top:23%;height:73%}.initial h1{margin-top:13vh;font-size:17vw}.initial p{max-width:21ch}} 
+  </style>
+  <style>
+    .site-loader{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#111b17ed;backdrop-filter:blur(8px);transition:opacity .65s,visibility .65s;color:#f2f7ef}.site-loader.is-done{opacity:0;visibility:hidden;pointer-events:none}.loader-content{text-align:center;width:min(330px,80vw)}.loader-orbit{width:116px;height:116px;margin:0 auto 32px;position:relative;display:grid;place-items:center}.loader-orbit:before,.loader-orbit:after{content:'';position:absolute;inset:0;border:1px solid #8bbd7940;border-top-color:#19ed00;border-radius:50%;animation:loader-spin 3s linear infinite}.loader-orbit:after{inset:12px;animation-direction:reverse;animation-duration:4.5s;border-top-color:#69aaff}.loader-orbit span{color:#19ed00;font-size:48px;animation:loader-breathe 2s ease-in-out infinite}.loader-name{font-weight:900;font-size:36px;letter-spacing:-2px}.loader-caption{font-size:10px;letter-spacing:3px;color:#9eb098;margin:13px 0 30px}.loader-meter{height:2px;background:#ffffff18;overflow:hidden}.loader-meter i{display:block;height:100%;width:100%;transform:scaleX(var(--loaded,0));transform-origin:left;background:linear-gradient(90deg,#8bbd79,#19ed00);transition:transform .3s}.loader-status{font-size:12px;color:#a9b7a3;min-height:18px;margin-top:17px}.loader-skip{color:#c9d6c3;background:none;border:0;border-bottom:1px solid #8bbd7970;padding:10px;font:inherit;font-size:12px;cursor:pointer;margin-top:12px}.loader-skip[hidden]{display:none}@keyframes loader-spin{to{transform:rotate(360deg)}}@keyframes loader-breathe{50%{opacity:.55;transform:scale(.92)}}@media(prefers-reduced-motion:reduce){.site-loader,.loader-meter i{transition:none}.loader-orbit:before,.loader-orbit:after,.loader-orbit span{animation:none}}
+  </style>
+  <link rel="preload" href="/assets/pack-melon.svg" as="image" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script>if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
+  <script defer src="/vendor/react.js"></script>
+  <script defer src="/vendor/react-dom.js"></script>
+  <script defer src="/vendor/gsap.js"></script>
+  <script defer src="/vendor/ScrollTrigger.js"></script>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="site-loader" id="site-loader" role="status" aria-label="Загрузка сайта">
+    <div class="loader-content"><div class="loader-orbit" aria-hidden="true"><span>✳</span></div><div class="loader-name">ШКРЕДСЫ</div><p class="loader-caption">ГОТОВИМ ВКУС К ПОЛЁТУ</p><div class="loader-meter" aria-hidden="true"><i></i></div><p class="loader-status">Загружаем сцену…</p><button type="button" class="loader-skip" hidden>Показать страницу</button></div>
+  </div>
+  <script>
+    (()=>{const loader=document.getElementById('site-loader');const dismiss=()=>loader.remove();loader.querySelector('button').addEventListener('click',dismiss);window.addEventListener('error',e=>{if(e.target instanceof HTMLScriptElement)dismiss();},true);setTimeout(()=>{if(loader.isConnected){loader.querySelector('.loader-status').textContent='Загрузка занимает больше времени';loader.querySelector('button').hidden=false;}},15000);})();
+  </script>
+  <noscript><style>.site-loader{display:none}</style></noscript>
+  <div id="root">
+    <main class="initial">
+      <div class="initial-name">ШКРЕДСЫ ↗</div>
+      <div class="initial-art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 540" role="img" aria-label="Упаковка мармелада ДЫНЯ"><defs><linearGradient id="p" x2="1" y2=".2"><stop stop-color="#f6ca29"/><stop offset=".4" stop-color="#f6ca29"/><stop offset=".75" stop-color="#fff" stop-opacity=".68"/><stop offset="1" stop-color="#f6ca29"/></linearGradient><radialGradient id="g"><stop stop-color="#fff" stop-opacity=".4"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><path d="M40 30L360 30L378 497L350 510L43 508L22 495Z" fill="#f6ca29" stroke="#222" stroke-opacity=".2" stroke-width="2"/><path d="M40 30L360 30L378 497L350 510L43 508L22 495Z" fill="url(#p)" opacity=".35"/><path d="M38 47H361M29 487H374" stroke="#222" stroke-opacity=".2" stroke-width="6"/><text x="46" y="177" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="122" letter-spacing="-12" fill="#090909">ШКР</text><text x="38" y="277" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="108" letter-spacing="-10" fill="#090909">ЕДСЫ</text><text x="48" y="310" font-family="Arial,sans-serif" font-size="14" fill="#121212">МАРМЕЛАД СО ВКУСОМ</text><text x="48" y="336" font-family="Arial,sans-serif" font-size="19" font-weight="900" fill="#111">ДЫНЯ</text><ellipse cx="259" cy="400" rx="87" ry="79" fill="url(#g)" stroke="#ffffffbb" stroke-width="2"/><ellipse cx="231" cy="396" rx="16" ry="24" fill="#0a0a0a" transform="rotate(-12 231 396)"/><ellipse cx="291" cy="396" rx="16" ry="24" fill="#0a0a0a" transform="rotate(12 291 396)"/><path d="M239 435Q261 454 282 434" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/><circle cx="87" cy="414" r="43" fill="#ffe07a" stroke="#fff" stroke-width="3"/><path d="M25 358L62 339L50 354L75 362M321 322L351 343L330 349" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="4"/></svg></div>
+      <h1>ВКУС БЕЗ<br /><span>ПРАВИЛ.</span></h1>
+      <p>Дыня. Голубая малина. Ежевика.</p>
+      <a href="#fallback-contact">О проекте ↓</a>
+      <small id="fallback-contact">Дизайн-концепт мармелада. Форма пока не работает.</small>
+    </main>
+  </div>
+  <noscript><p style="padding:24px">Интерактивная сцена требует JavaScript. Вы видите статичную версию ШКРЕДСЫ; отправка заявок не подключена.</p></noscript>
+</body>
+</html>
