@@ -25,7 +25,7 @@
 </head>
 <body>
   <div class="site-loader" id="site-loader" role="status" aria-label="Загрузка сайта">
-    <div class="loader-content"><div class="loader-orbit" aria-hidden="true"><span>✳</span></div><div class="loader-name">ШКРЕДСЫ</div><p class="loader-caption">ГОТОВИМ ВКУС К ПОЛЁТУ</p><div class="loader-meter" aria-hidden="true"><i></i></div><p class="loader-status">Загружаем сцену…</p><button type="button" class="loader-skip" hidden>Показать страницу</button></div>
+    <div class="loader-content"><div class="loader-orbit" aria-hidden="true"><span><svg width="48" height="48" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2v28M2 16h28M6 6l20 20M6 26L26 6" stroke="currentColor" stroke-width="1.5"/></svg></span></div><div class="loader-name">ШКРЕДСЫ</div><p class="loader-caption">ГОТОВИМ ВКУС К ПОЛЁТУ</p><div class="loader-meter" aria-hidden="true"><i></i></div><p class="loader-status">Загружаем сцену…</p><button type="button" class="loader-skip" hidden>Показать страницу</button></div>
   </div>
   <script>
     (()=>{const loader=document.getElementById('site-loader');const dismiss=()=>loader.remove();loader.querySelector('button').addEventListener('click',dismiss);window.addEventListener('error',e=>{if(e.target instanceof HTMLScriptElement)dismiss();},true);setTimeout(()=>{if(loader.isConnected){loader.querySelector('.loader-status').textContent='Загрузка занимает больше времени';loader.querySelector('button').hidden=false;}},15000);})();

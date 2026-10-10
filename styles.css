@@ -126,3 +126,12 @@
 .ending .marketplaces>p{color:#29452b}.ending .marketplaces a{color:#142b17;border-color:#29452b66;padding:13px 20px;font-size:14px}.ending .marketplaces a:hover,.ending .marketplaces a:focus-visible{color:#fff;background:#203c25;border-color:#203c25}
 .site-hashtag{width:100%;margin:2px 0 0;font-size:12px!important;letter-spacing:1.4px;color:#8bbd79!important;text-align:center;order:5}
 
+
+/* Draw decorative sparks without platform-dependent emoji glyphs. */
+.graphic-spark{display:inline-block;width:1em;height:1em;flex-shrink:0;background:currentColor;clip-path:polygon(47% 0,53% 0,53% 42%,83% 12%,88% 17%,58% 47%,100% 47%,100% 53%,58% 53%,88% 83%,83% 88%,53% 58%,53% 100%,47% 100%,47% 58%,17% 88%,12% 83%,42% 53%,0 53%,0 47%,42% 47%,12% 17%,17% 12%,47% 42%)}
+.motion-invite{position:relative;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px;margin:20px 0 28px;border:1px solid #8bbd7960;border-radius:16px;background:#223728;color:#f1f5f4}
+.motion-invite strong{font-size:22px;line-height:1.25}.motion-invite p{font-size:15px;line-height:1.5;color:#c0cfbc;margin-top:8px}
+.motion-enable{display:flex;align-items:center;justify-content:center;gap:20px;flex-shrink:0;min-height:56px;padding:16px 24px;border:0;border-radius:8px;background:#8bbd79;color:#122511;font-weight:800;font-size:17px}
+.motion-enable:hover{background:#a6d595}.motion-enable:focus-visible{outline:3px solid white;outline-offset:5px}
+.is-reduced .scene-footer .motion-toggle{display:none}
+@media(max-width:640px){.motion-invite{flex-direction:column;align-items:stretch;gap:18px;padding:20px;margin-top:24px}.motion-invite strong{font-size:21px}.motion-enable{width:100%;min-height:58px;font-size:17px}}
