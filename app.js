@@ -28,7 +28,8 @@ for (const id of ['melon', 'blue', 'blackberry']) {
     const names = id === 'melon' ? ['melon-whole', 'melon-half', 'melon-slice'] : ['left', 'center', 'right'].map(view => (id === 'blue' ? 'blue' : 'red') + '-' + view);
     fruitImages[id] = names.map(name => { const img = new Image(); img.src = '/assets/fruits/' + name + '.png'; return img; });
 }
-function Arrow() { return React.createElement("span", { "aria-hidden": "true" }, "\u2197"); }
+function Arrow() { return React.createElement("svg", { className: "arrow-icon", viewBox: "0 0 24 24", width: "18", height: "18", fill: "none", "aria-hidden": "true", focusable: "false" },
+    React.createElement("path", { d: "M5 19L19 5M5 5h14v14", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })); }
 function Avatar({ large = false }) { return React.createElement("img", { className: large ? 'brand-avatar ending-avatar' : 'brand-avatar', src: "/assets/alien-avatar.png", width: "40", height: "40", alt: "", "aria-hidden": "true" }); }
 const ProductView = React.forwardRef(({ flavor, mode, className = '' }, ref) => {
     const canvas = React.useRef(null), renderer = React.useRef(null), progress = React.useRef(0), kind = React.useRef(flavor);
@@ -252,7 +253,8 @@ function App() {
                     React.createElement("span", { className: "hero-sticker", "aria-hidden": "true" },
                         "\u041B\u041E\u0412\u0418",
                         React.createElement("br", null),
-                        "\u0412\u041A\u0423\u0421 \u2197")),
+                        "\u0412\u041A\u0423\u0421 ",
+                        React.createElement(Arrow, null))),
                 React.createElement("div", { className: "hero-bottom" },
                     React.createElement("span", null,
                         "\u0421\u041B\u0410\u0414\u041A\u0418\u0419 \u0425\u0410\u041E\u0421.",
@@ -278,7 +280,9 @@ function App() {
                     React.createElement("div", { className: "scene-top" },
                         React.createElement("a", { href: "#top" }, "\u2190 \u0412 \u043D\u0430\u0447\u0430\u043B\u043E"),
                         React.createElement("span", null, chapter === 3 ? 'ВЫБЕРИ СВОЮ СТОРОНУ' : current.en + ' / ШКРЕДСЫ'),
-                        React.createElement("a", { href: "#channels" }, "\u041D\u0430 \u0441\u0432\u044F\u0437\u0438 \u2197")),
+                        React.createElement("a", { href: "#channels" },
+                            "\u041D\u0430 \u0441\u0432\u044F\u0437\u0438 ",
+                            React.createElement(Arrow, null))),
                     reduced && React.createElement("div", { className: "motion-invite" },
                         React.createElement("div", null,
                             React.createElement("strong", null, "\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0438 \u0432\u043A\u0443\u0441\u044B \u0432 \u0434\u0432\u0438\u0436\u0435\u043D\u0438\u0438"),
@@ -335,7 +339,7 @@ function App() {
                             React.createElement("p", { className: "vote-status", role: "status" }, voteStatus || (vote ? 'Твой выбор — ' + flavors.find(f => f.id === vote).name + '. Можно передумать.' : 'Выбери фаворита. Можно изменить свой выбор.')),
                             React.createElement("small", null, "\u0412\u044B\u0431\u043E\u0440 \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0435\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E \u0432 \u044D\u0442\u043E\u043C \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435. \u041E\u0431\u0449\u0438\u0439 \u043F\u043E\u0434\u0441\u0447\u0451\u0442 \u043F\u043E\u043A\u0430 \u043D\u0435 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0451\u043D."))),
                     React.createElement("div", { className: "scene-footer" },
-                        React.createElement("button", { type: "button", className: "motion-toggle", onClick: toggleMotion, "aria-pressed": reduced }, reduced ? 'Включить движение ↗' : 'Без движения'),
+                        React.createElement("button", { type: "button", className: "motion-toggle", onClick: toggleMotion, "aria-pressed": reduced }, reduced ? 'Включить движение' : 'Без движения'),
                         React.createElement("span", { className: "scroll-cue" }, chapter === 3 ? 'Листай дальше — больше вкуса ↓' : 'Листай — пересекай границы ↓'),
                         React.createElement("div", { className: "scene-progress", "aria-hidden": "true" },
                             React.createElement("i", null)),

@@ -135,3 +135,5 @@
 .motion-enable:hover{background:#a6d595}.motion-enable:focus-visible{outline:3px solid white;outline-offset:5px}
 .is-reduced .scene-footer .motion-toggle{display:none}
 @media(max-width:640px){.motion-invite{flex-direction:column;align-items:stretch;gap:18px;padding:20px;margin-top:24px}.motion-invite strong{font-size:21px}.motion-enable{width:100%;min-height:58px;font-size:17px}}
+
+.arrow-icon{display:inline-block;width:1em;height:1em;vertical-align:-.1em;flex-shrink:0}.hero-sticker .arrow-icon{width:.8em;height:.8em}.scene-top>a:last-child .arrow-icon{margin-left:4px}
