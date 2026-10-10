@@ -98,6 +98,23 @@ function App() {
             stage.style.setProperty('--portal-top', (flight.cut * 100) + '%');
             stage.style.setProperty('--world-from', from.color);
             stage.style.setProperty('--world-to', to.color);
+            // Reveal both texts at the same stage-space boundary as the world and pack.
+            const copies = stage.querySelectorAll('.scene-copy:not(.vote-panel)');
+            copies.forEach((copy, index) => {
+                const id = flavors[index].id;
+                const visible = phase < .76 && (flight.transition ? (id === flight.from || id === flight.to) : id === flight.kind);
+                copy.style.opacity = visible ? '1' : '0';
+                copy.style.visibility = visible ? 'visible' : 'hidden';
+                copy.style.setProperty('--flavor', flavors[index].color);
+                if (flight.transition && visible) {
+                    const edge = flight.cut * stage.clientHeight - copy.offsetTop;
+                    copy.style.clipPath = id === flight.from
+                        ? `inset(-100px -100px ${Math.max(-100, copy.offsetHeight - edge)}px)`
+                        : `inset(${Math.max(-100, edge)}px -100px -100px)`;
+                }
+                else
+                    copy.style.clipPath = 'none';
+            });
             setChapter(phase < .24 ? 0 : phase < .52 ? 1 : phase < .76 ? 2 : 3);
             setFlavor(flight.kind);
             flavorRef.current = flight.kind;
@@ -205,6 +222,12 @@ function App() {
             document.removeEventListener('visibilitychange', onVisibility);
             context.revert();
             triggerRef.current = null;
+            stage.querySelectorAll('.scene-copy:not(.vote-panel)').forEach(copy => {
+                copy.style.opacity = '';
+                copy.style.visibility = '';
+                copy.style.clipPath = '';
+                copy.style.removeProperty('--flavor');
+            });
         };
     }, [reduced]);
     function castVote(id) { setVote(id); try {
