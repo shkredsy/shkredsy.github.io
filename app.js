@@ -88,6 +88,12 @@ function App() {
         gsap.registerPlugin(ScrollTrigger);
         ScrollTrigger.config({ autoRefreshEvents: 'none' });
         let timeline = null, trigger = null;
+        const copies = Array.from(stage.querySelectorAll('.scene-copy:not(.vote-panel)'));
+        let stageHeight = stage.clientHeight, copyBounds = copies.map(copy => ({ top: copy.offsetTop, height: copy.offsetHeight }));
+        const measureCopies = () => { stageHeight = stage.clientHeight; copyBounds = copies.map(copy => ({ top: copy.offsetTop, height: copy.offsetHeight })); };
+        const copyObserver = new ResizeObserver(measureCopies);
+        copyObserver.observe(stage);
+        copies.forEach(copy => copyObserver.observe(copy));
         let resizeTimer, saveFrame = 0, lastProgress = restored?.zone === 'scene' ? restored.progress : 0, lastZone = 'page', resizing = false, ready = false;
         const paint = (phase) => {
             sceneModel.current?.setProgress(phase);
@@ -99,7 +105,6 @@ function App() {
             stage.style.setProperty('--world-from', from.color);
             stage.style.setProperty('--world-to', to.color);
             // Reveal both texts at the same stage-space boundary as the world and pack.
-            const copies = stage.querySelectorAll('.scene-copy:not(.vote-panel)');
             copies.forEach((copy, index) => {
                 const id = flavors[index].id;
                 const visible = phase < .76 && (flight.transition ? (id === flight.from || id === flight.to) : id === flight.kind);
@@ -107,9 +112,9 @@ function App() {
                 copy.style.visibility = visible ? 'visible' : 'hidden';
                 copy.style.setProperty('--flavor', flavors[index].color);
                 if (flight.transition && visible) {
-                    const edge = flight.cut * stage.clientHeight - copy.offsetTop;
+                    const edge = flight.cut * stageHeight - copyBounds[index].top;
                     copy.style.clipPath = id === flight.from
-                        ? `inset(-100px -100px ${Math.max(-100, copy.offsetHeight - edge)}px)`
+                        ? `inset(-100px -100px ${Math.max(-100, copyBounds[index].height - edge)}px)`
                         : `inset(${Math.max(-100, edge)}px -100px -100px)`;
                 }
                 else
@@ -222,6 +227,7 @@ function App() {
             document.removeEventListener('visibilitychange', onVisibility);
             context.revert();
             triggerRef.current = null;
+            copyObserver.disconnect();
             stage.querySelectorAll('.scene-copy:not(.vote-panel)').forEach(copy => {
                 copy.style.opacity = '';
                 copy.style.visibility = '';
@@ -517,11 +523,12 @@ var Candy3D;
             this.lost = false;
             this.view = identity();
             this.projection = identity();
+            this.mobileGPU = matchMedia('(pointer: coarse)').matches;
             this.onLost = (e) => { e.preventDefault(); this.lost = true; this.canvas.dataset.ready = 'false'; };
             this.onRestore = () => { this.canvas.dispatchEvent(new CustomEvent('rebuild-model')); };
             this.kind = kind;
             this.readyCallback = onReady;
-            const gl = canvas.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: false, preserveDrawingBuffer: true, powerPreference: 'low-power' });
+            const gl = canvas.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: false, preserveDrawingBuffer: false, powerPreference: 'default' });
             if (!gl)
                 throw new Error('WebGL unavailable');
             this.gl = gl;
@@ -581,9 +588,11 @@ var Candy3D;
         }
         mesh(data) { const g = this.gl, b = g.createBuffer(); g.bindBuffer(g.ARRAY_BUFFER, b); g.bufferData(g.ARRAY_BUFFER, data, g.STATIC_DRAW); const m = { buffer: b, count: data.length / 8 }; this.meshes.push(m); return m; }
         resize() { if (this.destroyed || this.lost)
-            return; const r = this.canvas.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, this.mode === 'scene' ? 1.5 : 1.25); if (r.width < 1 || r.height < 1)
-            return; this.canvas.width = Math.round(r.width * dpr); this.canvas.height = Math.round(r.height * dpr); this.gl.viewport(0, 0, this.canvas.width, this.canvas.height); this.projection = perspective(r.width / r.height); this.view = matrix([0, 0, -9]); this.draw(); }
-        set(kind, progress, hover = 0) { this.kind = kind; this.progress = progress; this.hover = hover; this.draw(); }
+            return; const r = this.canvas.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, this.mobileGPU ? 1.15 : this.mode === 'scene' ? 1.5 : 1.25); if (r.width < 1 || r.height < 1)
+            return; const width = Math.round(r.width * dpr), height = Math.round(r.height * dpr); if (this.canvas.width === width && this.canvas.height === height)
+            return; this.canvas.width = width; this.canvas.height = height; this.gl.viewport(0, 0, width, height); this.projection = perspective(r.width / r.height); this.view = matrix([0, 0, -9]); this.draw(); }
+        set(kind, progress, hover = 0) { const unchanged = kind === this.kind && hover === this.hover && (this.mode === 'hero' || progress === this.progress); this.kind = kind; this.progress = progress; this.hover = hover; if (!unchanged)
+            this.draw(); }
         render(mesh, model, color, material = 0) { const g = this.gl; g.bindBuffer(g.ARRAY_BUFFER, mesh.buffer); this.attributes.forEach((a, i) => { g.enableVertexAttribArray(a); g.vertexAttribPointer(a, i === 2 ? 2 : 3, g.FLOAT, false, 32, i === 0 ? 0 : i === 1 ? 12 : 24); }); g.uniformMatrix4fv(this.uniforms.uModel, false, model); g.uniformMatrix4fv(this.uniforms.uMVP, false, multiply(this.projection, multiply(this.view, model))); g.uniform3fv(this.uniforms.uColor, color); g.uniform1f(this.uniforms.uMaterial, material); g.drawArrays(g.TRIANGLES, 0, mesh.count); }
         bag(parent, kind = this.kind) { const g = this.gl; g.bindTexture(g.TEXTURE_2D, this.textures[kind]); g.uniform2fv(this.uniforms['uCorners[0]'], new Float32Array(crops[kind])); this.render(this.front, parent, colors[kind], 1); this.render(this.back, parent, colors[kind], 2); this.seams.forEach(m => this.render(m, parent, colors[kind], 2)); }
         fruit(parent, kind, size = 1, variant = 0) {

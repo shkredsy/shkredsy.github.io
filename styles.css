@@ -140,3 +140,6 @@
 
 /* The portal controls text visibility directly, without a delayed opacity fade. */
 .app:not(.is-reduced) .scene-copy:not(.vote-panel){transition:none}
+
+/* Avoid full-canvas blur passes on touch-device GPUs. */
+@media(pointer:coarse){.scene-visual,.hero-art>.product-render{filter:none}.scene-copy{text-shadow:none}}
